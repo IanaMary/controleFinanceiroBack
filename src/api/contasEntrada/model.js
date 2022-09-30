@@ -1,5 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 
+const meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']
+
 const contasEntradaSchema = new Schema({
   user: {
     type: Schema.ObjectId,
@@ -7,10 +9,21 @@ const contasEntradaSchema = new Schema({
     required: true
   },
   nome: {
-    type: String
+    type: String,
+    required: true
   },
   valor: {
-    type: Number
+    type: Number,
+    required: true
+  },
+  ano: {
+    type: Number,
+    required: true
+  },
+  mes: {
+    type: String,
+    enum: meses,
+    required: true
   }
 }, {
   timestamps: true,
@@ -27,6 +40,8 @@ contasEntradaSchema.methods = {
       id: this.id,
       user: this.user.view(full),
       nome: this.nome,
+      ano: this.ano,
+      mes: this.mes,
       valor: this.valor,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
